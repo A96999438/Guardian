@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+motor
+python-dotenv
+httpx
+apscheduler
+google-auth
+google-auth-oauthlib
+google-api-python-client
+tldextract
