@@ -1,54 +1,88 @@
-# 🛡️ Guardian – AI Powered Gmail Monitoring & Phishing Detection System
+# 🛡️ Guardian – AI-Powered Gmail Monitoring & Phishing Detection System
 
-Guardian is an AI-powered Gmail monitoring system that automatically scans incoming emails, extracts URLs, detects phishing attempts using Machine Learning and Threat Intelligence APIs, and alerts users about potentially malicious links.
+Guardian is an **AI-powered Gmail Monitoring and Phishing Detection System** that leverages **Machine Learning**, **Threat Intelligence APIs**, and **real-time email monitoring** to identify malicious URLs before users interact with them.
 
-The system continuously monitors a Gmail inbox using OAuth 2.0 authentication and classifies suspicious URLs into different risk levels to improve email security.
+The application securely connects to a Gmail account using **Google OAuth 2.0**, continuously monitors incoming emails, extracts embedded URLs, evaluates them using a trained **Machine Learning model**, Google Safe Browsing API, and rule-based security checks, classifies the URLs into different risk levels, and stores scan history in **MongoDB Atlas** for future analysis.
 
 ---
 
-# 📌 Features
+# 🚀 Features
 
-- 🔐 Secure Gmail Authentication using OAuth 2.0
-- 📧 Automatic Gmail Inbox Monitoring
-- 🔗 Automatic URL Extraction from Emails
-- 🤖 Machine Learning Based Phishing Detection
+- 🔐 Secure Gmail Authentication using Google OAuth 2.0
+- 📧 Real-Time Gmail Inbox Monitoring
+- 🔗 Automatic URL Extraction from Incoming Emails
+- 🤖 AI & Machine Learning Based Phishing Detection
 - 🌐 Google Safe Browsing API Integration
-- ⚠️ Risk Classification (Low / Medium / High)
-- 🚨 Real-Time Alert Generation
+- 🛡️ Rule-Based Threat Detection
+- ⚠️ URL Risk Classification (Low / Medium / High)
+- 🚨 Real-Time Security Alerts
 - 💾 Secure Scan History Storage in MongoDB Atlas
 - ⏱️ Continuous Background Monitoring using APScheduler
+- ⚡ FastAPI Backend for High Performance APIs
 
 ---
 
 # 🏗️ System Architecture
 
 ```
-                  Gmail Account
-                        │
-                 OAuth 2.0 Login
-                        │
-                        ▼
-                Gmail Monitoring
-                        │
-                        ▼
-                URL Extraction
-                        │
-         ┌──────────────┴──────────────┐
-         │                             │
-         ▼                             ▼
- Machine Learning Model      Google Safe Browsing API
-         │                             │
-         └──────────────┬──────────────┘
-                        ▼
-                Risk Classification
-          (Low / Medium / High Risk)
-                        │
-                        ▼
+                   Gmail Account
+                         │
+                  Google OAuth 2.0
+                         │
+                         ▼
+              Continuous Email Monitoring
+                         │
+                         ▼
+                 URL Extraction Module
+                         │
+          ┌──────────────┴──────────────┐
+          │                             │
+          ▼                             ▼
+ Machine Learning Model     Google Safe Browsing API
+          │                             │
+          └──────────────┬──────────────┘
+                         ▼
+               Rule-Based Validation
+                         │
+                         ▼
+               Risk Classification
+            (Low / Medium / High)
+                         │
+                         ▼
               Store Results in MongoDB
-                        │
-                        ▼
-                 Generate Alerts
+                         │
+                         ▼
+               Generate Security Alerts
 ```
+
+---
+
+# 🧠 AI & Machine Learning
+
+Guardian integrates Artificial Intelligence with cybersecurity to improve phishing detection accuracy.
+
+The Machine Learning model analyzes extracted URLs and predicts whether they are legitimate or phishing attempts. To further improve reliability, predictions are verified using Google's Safe Browsing API along with custom security rules.
+
+This hybrid approach reduces false positives while improving phishing detection performance.
+
+---
+
+# 📂 Project Workflow
+
+1. User authenticates Gmail using Google OAuth 2.0.
+2. Guardian continuously monitors the Gmail inbox.
+3. Newly received emails are fetched automatically.
+4. URLs are extracted from email content.
+5. URLs are analyzed using:
+   - Trained Machine Learning Model
+   - Google Safe Browsing API
+   - Rule-Based Detection
+6. URLs are classified into:
+   - 🟢 Low Risk
+   - 🟡 Medium Risk
+   - 🔴 High Risk
+7. Scan results are stored securely in MongoDB Atlas.
+8. Security alerts are generated whenever suspicious or phishing URLs are detected.
 
 ---
 
@@ -58,9 +92,15 @@ The system continuously monitors a Gmail inbox using OAuth 2.0 authentication an
 
 - Python 3.11+
 
-## Backend
+## Backend Framework
 
 - FastAPI
+
+## Machine Learning
+
+- Scikit-learn
+- Joblib
+- Trained Phishing Detection Model (.pkl)
 
 ## Database
 
@@ -70,98 +110,86 @@ The system continuously monitors a Gmail inbox using OAuth 2.0 authentication an
 
 - Google OAuth 2.0
 
-## Scheduler
-
-- APScheduler
-
 ## APIs
 
 - Gmail API
 - Google Safe Browsing API
 
-## Machine Learning
+## Scheduler
 
-- Scikit-learn
+- APScheduler
+
+## Development Environment
+
+- Visual Studio Code
 
 ## Libraries
 
 - FastAPI
 - httpx
 - python-dotenv
-- APScheduler
-- Joblib
-- PyMongo
+- pymongo
+- scikit-learn
+- joblib
 
 ---
 
-# 📂 Project Workflow
+# 📁 Project Structure
 
-1. User authenticates Gmail using OAuth 2.0.
-2. Guardian continuously monitors the inbox.
-3. URLs are extracted from incoming emails.
-4. URLs are analyzed using:
-   - Machine Learning Model
-   - Google Safe Browsing API
-   - Rule-Based Detection
-5. URLs are classified into:
-   - Low Risk
-   - Medium Risk
-   - High Risk
-6. Scan results are stored in MongoDB Atlas.
-7. Alerts are generated for suspicious or phishing links.
-
----
-
-# 🎯 Objectives
-
-- Automate Gmail inbox monitoring
-- Detect phishing URLs automatically
-- Reduce phishing attacks
-- Generate real-time security alerts
-- Store historical scan reports
-- Improve email security using AI
-
----
-
-# 🧠 Machine Learning
-
-The project uses a Machine Learning model developed with **Scikit-learn** to classify URLs as:
-
-- Legitimate
-- Suspicious
-- Phishing
-
-The model works together with Google Safe Browsing API and rule-based checks to improve detection accuracy.
+```
+Guardian/
+│
+├── app/
+│   ├── controllers/          # Business logic and request handling
+│   ├── core/                 # Core configuration and utilities
+│   ├── db/                   # MongoDB connection
+│   ├── models/               # Database models
+│   ├── routes/               # API endpoints
+│   ├── services/             # Gmail monitoring and phishing detection services
+│   └── main.py               # FastAPI application entry point
+│
+├── data/                     # Dataset used for training/testing
+│
+├── ml/                       # Machine Learning related modules
+│
+├── phishing_model.pkl        # Trained Machine Learning model
+│
+├── requirements.txt          # Python dependencies
+│
+├── README.md                 # Project documentation
+│
+└── .gitignore                # Ignored files
+```
 
 ---
 
 # ⚙️ Installation
 
-## Clone Repository
+## Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/guardian-phishing-detector.git
-```
+git clone https://github.com/A96999438/Guardian.git
 
-```bash
-cd guardian-phishing-detector
+cd Guardian
 ```
 
 ---
 
 ## Create Virtual Environment
 
-Windows
+### Windows
 
 ```bash
 python -m venv venv
+
 venv\Scripts\activate
 ```
 
-Linux / Mac
+### Linux / macOS
 
 ```bash
 python3 -m venv venv
+
 source venv/bin/activate
 ```
 
@@ -177,18 +205,18 @@ pip install -r requirements.txt
 
 ## Configure Environment Variables
 
-Create a `.env` file and add:
+Create a `.env` file and add the following:
 
 ```env
-MONGODB_URI=
+MONGODB_URI=your_mongodb_uri
 
-GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_ID=your_client_id
 
-GOOGLE_CLIENT_SECRET=
+GOOGLE_CLIENT_SECRET=your_client_secret
 
-GOOGLE_SAFE_BROWSING_API_KEY=
+GOOGLE_SAFE_BROWSING_API_KEY=your_api_key
 
-SECRET_KEY=
+SECRET_KEY=your_secret_key
 ```
 
 ---
@@ -196,41 +224,29 @@ SECRET_KEY=
 ## Run the Application
 
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 ---
 
 # 📊 Risk Levels
 
-| Risk | Meaning |
-|------|---------|
+| Risk Level | Description |
+|------------|-------------|
 | 🟢 Low | Safe URL |
 | 🟡 Medium | Suspicious URL |
-| 🔴 High | Phishing / Malicious URL |
+| 🔴 High | Malicious / Phishing URL |
 
 ---
 
-# 📁 Project Structure
+# 🎯 Objectives
 
-```
-Guardian/
-│
-├── app/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   ├── scheduler/
-│   ├── utils/
-│
-├── ml_model/
-│
-├── requirements.txt
-├── main.py
-├── .env
-└── README.md
-```
+- Automate Gmail inbox monitoring
+- Detect phishing URLs using AI & Machine Learning
+- Reduce phishing attacks
+- Generate real-time security alerts
+- Securely store scan history
+- Improve email security using intelligent threat detection
 
 ---
 
@@ -242,20 +258,22 @@ Guardian/
 
 ✔ URLs Extracted Successfully
 
-✔ Risk Analysis Completed
+✔ AI-Based URL Analysis Completed
 
 ✔ Phishing Links Detected
 
-✔ Alerts Generated
+✔ Risk Classification Generated
 
-✔ Scan Stored in MongoDB Atlas
+✔ Scan History Stored in MongoDB Atlas
+
+✔ Security Alerts Generated
 
 ---
 
 # 💻 Hardware Requirements
 
 - Intel Core i5 or Higher
-- 8 GB RAM
+- Minimum 8 GB RAM
 - 256 GB Storage
 - Internet Connection
 
@@ -272,60 +290,63 @@ Guardian/
 
 ---
 
-# 🚧 Challenges Faced
+# 🚧 Challenges
 
-- Implementing secure Gmail OAuth authentication
-- Reducing false positives during phishing detection
-- Continuous background monitoring
-- Secure cloud database integration
-- Combining ML prediction with threat intelligence APIs
+- Secure Gmail OAuth 2.0 Authentication
+- Accurate AI-Based Phishing Detection
+- Reducing False Positives
+- Continuous Background Monitoring
+- Integrating Machine Learning with Threat Intelligence APIs
+- Secure Cloud Database Management
 
 ---
 
-# 🔮 Future Improvements
+# 🔮 Future Enhancements
 
-- Web Dashboard
-- Email Notifications
-- SMS Alerts
-- Weekly Security Reports
+- Web Dashboard for Security Reports
+- Email & SMS Notifications
 - Support for Outlook and Yahoo Mail
 - Cloud Deployment
-- Deep Learning Based Detection
 - Browser Extension
-- User Analytics Dashboard
+- Deep Learning Based URL Detection
+- Security Analytics Dashboard
+- Weekly Security Reports
+- Multi-User Support
 
 ---
 
 # 📈 Results
 
-- Successfully connected Gmail using OAuth 2.0
-- Automatically monitored incoming emails
-- Extracted URLs from emails
-- Detected phishing links using Machine Learning
-- Classified URLs based on risk
-- Generated real-time alerts
-- Stored all scan records securely in MongoDB Atlas
+- Successfully authenticated Gmail using OAuth 2.0.
+- Continuously monitored Gmail inbox in real time.
+- Extracted URLs automatically from incoming emails.
+- Detected phishing links using AI & Machine Learning.
+- Verified URLs using Google Safe Browsing API.
+- Classified URLs into Low, Medium, and High risk.
+- Stored scan history securely in MongoDB Atlas.
+- Generated real-time alerts for malicious URLs.
 
 ---
 
 # 🤝 Contributing
 
-Contributions are welcome.
+Contributions are welcome!
 
 1. Fork the repository
-2. Create a new branch
+
+2. Create a feature branch
 
 ```bash
 git checkout -b feature-name
 ```
 
-3. Commit changes
+3. Commit your changes
 
 ```bash
-git commit -m "Added new feature"
+git commit -m "Add new feature"
 ```
 
-4. Push
+4. Push your branch
 
 ```bash
 git push origin feature-name
@@ -343,18 +364,22 @@ This project is developed for educational and research purposes.
 
 # 👨‍💻 Developer
 
-**Aman Aslam Patel**
+## Aman Aslam Patel
 
 Artificial Intelligence & Data Science Student
 
-GitHub: https://github.com/yourusername
+🔗 **GitHub**
 
-LinkedIn: https://linkedin.com/in/yourprofile
+https://github.com/A96999438
+
+🔗 **LinkedIn**
+
+https://www.linkedin.com/in/a-92-p/
 
 ---
 
 # ⭐ Support
 
-If you found this project helpful, consider giving it a **⭐ Star** on GitHub.
+If you found this project useful, please consider giving it a **⭐ Star** on GitHub.
 
-It motivates further development and improvements.
+Your support motivates future improvements and development.
